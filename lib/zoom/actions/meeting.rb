@@ -35,7 +35,7 @@ module Zoom
       # List all the scheduled meetings on Zoom.
       def meeting_list(*args)
         options = Utils.extract_options!(args)
-        Utils.require_params(:host_id, options)
+        Utils.require_params(:user_id, options)
         Utils.process_datetime_params!(:start_time, options)
         # TODO Handle `page_size` attr, Defaults to 30. Max of 300 meetings.
         # TODO Handle `page_number` attr, Defaults to 1.
