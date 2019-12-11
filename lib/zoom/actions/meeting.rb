@@ -28,18 +28,18 @@ module Zoom
       # Get a meeting on Zoom via meeting ID, return the meeting info.
       def meeting_get(*args)
         options = Utils.extract_options!(args)
-        Utils.require_params(%i[id host_id], options)
-        Utils.parse_response self.class.post('/meeting/get', query: options)
+        Utils.require_params(%i[id host_id], params)
+        Utils.parse_response self.class.post('/meeting/get', query: params)
       end
 
       # List all the scheduled meetings on Zoom.
       def meeting_list(*args)
-        options = Utils.extract_options!(args)
-        Utils.require_params(:user_id, options)
-        Utils.process_datetime_params!(:start_time, options)
+        params = Utils.extract_options!(args)
+        Utils.require_params(:user_id, params)
+        Utils.process_datetime_params!(:start_time, params)
         # TODO Handle `page_size` attr, Defaults to 30. Max of 300 meetings.
         # TODO Handle `page_number` attr, Defaults to 1.
-        Utils.parse_response self.class.get("/list/#{params[:user_id]}/meetings", query: options)
+        Utils.parse_response self.class.get("/list/#{params[:user_id]}/meetings", query: params)
       end
 
       # List ended meetings
