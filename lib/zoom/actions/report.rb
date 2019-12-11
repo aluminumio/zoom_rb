@@ -26,7 +26,7 @@ module Zoom
       def report_getmeetingparticipants(*args)
         params = Utils.extract_options!(args)
         Utils.require_params(%i[meeting_id], params)
-        Utils.parse_response self.class.post('/report/meetings/' + params[:meeting_id] + '/participants', query: params)
+        Utils.parse_response self.class.get('/report/meetings/' + params[:meeting_id] + '/participants', query: params)
       end
     end
   end
