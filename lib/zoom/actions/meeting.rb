@@ -39,14 +39,14 @@ module Zoom
         Utils.process_datetime_params!(:start_time, params)
         # TODO Handle `page_size` attr, Defaults to 30. Max of 300 meetings.
         # TODO Handle `page_number` attr, Defaults to 1.
-        Utils.parse_response self.class.get("/list/#{params[:user_id]}/meetings", query: params)
+        Utils.parse_response self.class.get("/users/#{params[:user_id]}/meetings", query: params)
       end
 
       # List ended meetings
       def past_meetings(*args)
         params = Utils.extract_options!(args)
-        Utils.require_params(:user_id, params)
-        Utils.parse_response self.class.post("/past_meetings/#{params[:user_id]}/instances", query: params)
+        Utils.require_params(:meeting_id, params)
+        Utils.parse_response self.class.get("/past_meetings/#{params[:meeting_id]}/instances", query: params)
       end
 
       # Lists the live meetings on Zoom.
