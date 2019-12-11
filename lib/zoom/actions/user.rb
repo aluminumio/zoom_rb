@@ -4,7 +4,6 @@ module Zoom
   module Actions
     module User
       def get(path, permissions, args)
-        # headers 'Authorization' => "Bearer #{self.access_token}"
         params = Zoom::Params.new(Utils.extract_options!(args))
         params.permit(permissions)
         response = self.class.get('/users', query: { access_token: access_token })

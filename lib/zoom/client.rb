@@ -24,10 +24,16 @@ module Zoom
     headers 'Accept' => 'application/json'
     headers 'Content-Type' => 'application/json'
 
-    def initialize(config)
-      Utils.require_params(%i[api_key api_secret access_token refresh_token expires_at], config)
+    # Requires api_key/api_secret and defaults to JWT access mode
+    # But can also take: access_token refresh_token expires_at
+    # in which case these credentials are used instead.
+    def initialize(config) 
+      Utils.require_params(%i[api_key api_secret], config)
       config.each { |k, v| instance_variable_set("@#{k}", v) }
       self.class.default_timeout(@timeout)
+
+      # This is hacky... should really be recomputed / check for expiry every request
+      self.class.headers 'Authorization' => "Bearer #{self.access_token}"
     end
 
     def access_token
