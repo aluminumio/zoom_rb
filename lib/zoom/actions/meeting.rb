@@ -44,9 +44,9 @@ module Zoom
 
       # List ended meetings
       def past_meetings(*args)
-        options = Utils.extract_options!(args)
-        Utils.require_params(:meeting_id, options)
-        Utils.parse_response self.class.post("/past_meetings/#{params[:meeting_id]}/instances", query: options)
+        params = Utils.extract_options!(args)
+        Utils.require_params(:user_id, params)
+        Utils.parse_response self.class.post("/past_meetings/#{params[:user_id]}/instances", query: params)
       end
 
       # Lists the live meetings on Zoom.
