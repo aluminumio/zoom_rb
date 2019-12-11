@@ -27,9 +27,12 @@ module Zoom
     def new
       @configuration ||= Configuration.new
       Zoom::Client.new(
-        api_key: @configuration.api_key,
+        api_key:    @configuration.api_key,
         api_secret: @configuration.api_secret,
-        timeout: @configuration.timeout
+        access_token:  @configuration.access_token,
+        refresh_token: @configuration.refresh_token,
+        expires_at: @configuration.expires_at,
+        timeout:    @configuration.timeout
       )
     end
 
@@ -40,7 +43,7 @@ module Zoom
   end
 
   class Configuration
-    attr_accessor :api_key, :api_secret, :timeout
+    attr_accessor :api_key, :api_secret, :timeout, :access_token, :refresh_token, :expires_at
 
     def initialize
       @api_key = @api_secret = 'xxx'
