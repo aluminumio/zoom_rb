@@ -11,7 +11,7 @@ module Zoom
         Utils.parse_response(response)
       end 
       def user_list(*args)
-        self.get('/users', permit: %i[status page_size page_number], args)
+        self.get('/users', %i[status page_size page_number], args)
       end
 
       def user_create(*args)
