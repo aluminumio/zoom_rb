@@ -25,13 +25,14 @@ module Zoom
     headers 'Content-Type' => 'application/json'
 
     def initialize(config)
-      Utils.require_params(%i[api_key api_secret], config)
+      Utils.require_params(%i[api_key api_secret access_token refresh_token expires_at], config)
       config.each { |k, v| instance_variable_set("@#{k}", v) }
       self.class.default_timeout(@timeout)
     end
 
     def access_token
-      JWT.encode({ iss: @api_key, exp: Time.now.to_i + @timeout }, @api_secret, 'HS256', { typ: 'JWT' })
+      @access_token || 
+        JWT.encode({ iss: @api_key, exp: Time.now.to_i + @timeout }, @api_secret, 'HS256', { typ: 'JWT' })
     end
   end
 end

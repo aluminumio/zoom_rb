@@ -3,11 +3,15 @@
 module Zoom
   module Actions
     module User
-      def user_list(*args)
+      def get(path, permissions, args)
+        headers 'Authorization' => "Bearer #{self.access_token}"
         params = Zoom::Params.new(Utils.extract_options!(args))
-        params.permit(%i[status page_size page_number])
-        response = self.class.get('/users', query: params.merge(access_token: access_token))
+        params.permit(permissions)
+        response = self.class.get('/users', query: params)
         Utils.parse_response(response)
+      end 
+      def user_list(*args)
+        self.get('/users', permit: %i[status page_size page_number], args)
       end
 
       def user_create(*args)
